@@ -49,16 +49,24 @@ namespace PracticaCortaJames
         //boton de aceprtar
         private void Boton_Aceptar(object sender, RoutedEventArgs e)
         {
-            palabra = texto1.Text;
-            palabrasArray = palabra.Split(' ');
-            texto2.AppendText("Usted ha ingresado \n");
-            for (int i=0;i<palabrasArray.Length;i++)
+            try
             {
-                texto = palabrasArray[i];
-                texto2.AppendText(palabrasArray[i]+"\n");
-            }
+                palabra = texto1.Text;
+                palabrasArray = palabra.Split(' ');
+                texto2.AppendText("Usted ha ingresado \n");
+                for (int i = 0; i < palabrasArray.Length; i++)
+                {
+                    texto = palabrasArray[i];
+                    texto2.AppendText("Token = " + palabrasArray[i] + "\n");
+                }
 
-            determinar(palabrasArray);
+                determinar(palabrasArray);
+            }
+            catch(Exception)
+            {
+
+            }
+            
         }
 
         public void determinar(string [] palabra)
@@ -66,35 +74,46 @@ namespace PracticaCortaJames
             for (int i = 0; i < palabra.Length; i++)
             {
                 string local = palabra[i];
+                //string a = local[1];
                 int esnumero = 0;
                 decimal esdecimal = 0;
                 
                 //determina si es numero entero
-                if( (int.TryParse(local, out esnumero)) == true)
+                if ( (int.TryParse(local, out esnumero)) == true)
                 {
                     
-                        texto2.AppendText(esnumero + " es numero \n");
+                        texto3.AppendText(esnumero + "==> es entero \n");
                 }
+                
                 //determina si es decimal
                 else if ((decimal.TryParse(local, out esdecimal)) == true)
                 {
-                   
-                    texto2.AppendText(esdecimal + " es decimal \n");
+
+                    texto3.AppendText(esdecimal + "==> es decimal \n");
+                }
+                //determina si es Moneda
+                else if ((local.Contains("Q")==true))
+                {
+
+                    texto3.AppendText(local + "==> es Moneda \n");
                 }
                 //determina si es letra
                 else if (char.IsNumber(local,0) ==false)
                 {
 
-                    texto2.AppendText(local + " es letra \n");
+                    texto3.AppendText(local + "==> es letra \n");
                 }
-                //determina si es Moneda
-                else if (char.IsNumber(local, 0) == false)
-                {
+                
 
-                    texto2.AppendText(local + " es letra \n");
-                }
 
             }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            texto1.Clear();
+            texto2.Clear();
+            texto3.Clear();
         }
     }
 
